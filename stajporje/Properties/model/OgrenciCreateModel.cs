@@ -6,7 +6,7 @@ using stajproje.model;
 namespace stajproje.Properties.model
 {
     
-        public class Ogrenci
+        public class OgrenciCreateModel
         {
             [Key]
             public int ogrenciNo { get; set; }

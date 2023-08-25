@@ -1,53 +1,25 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using stajproje.model;
+using stajproje.Properties.model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using stajproje.Properties.model;
 using stajproje.model;
 
-namespace stajproje.Controller
+namespace stajproje.Handlers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OgrenciController : ControllerBase
+    public class OgrenciCommandHandler : ControllerBase
     {
         private readonly OkulDbContext _context;
 
-        public OgrenciController(OkulDbContext context)
+        public OgrenciCommandHandler(OkulDbContext context)
         {
             _context = context;
-        }
-
-        // GET: api/Ogrenci
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<OgrenciCreateModel>>> GetOgrenci()
-        {
-          if (_context.Ogrenci == null)
-          {
-              return NotFound();
-          }
-            return await _context.Ogrenci.ToListAsync();
-        }
-
-        // GET: api/Ogrenci/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<OgrenciCreateModel>> GetOgrenci(int id)
-        {
-          if (_context.Ogrenci == null)
-          {
-              return NotFound();
-          }
-            var ogrenci = await _context.Ogrenci.FindAsync(id);
-
-            if (ogrenci == null)
-            {
-                return NotFound();
-            }
-
-            return ogrenci;
         }
 
         // PUT: api/Ogrenci/5
@@ -92,14 +64,13 @@ namespace stajproje.Controller
             }
 
             if (_context.Ogrenci == null)
-          {
-              return Problem("Entity set 'OkulDbContext.Ogrenci'  is null.");
-          }
+            {
+                return Problem("Entity set 'OkulDbContext.Ogrenci'  is null.");
+            }
             _context.Ogrenci.Add(ogrenci);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOgrenci", new { id = ogrenci.ogrenciNo }, ogrenci);
-
+            return Ok();
 
         }
 
@@ -127,5 +98,6 @@ namespace stajproje.Controller
         {
             return (_context.Ogrenci?.Any(e => e.ogrenciNo == id)).GetValueOrDefault();
         }
+
     }
 }

@@ -10,11 +10,12 @@ namespace stajproje.model
         public OkulDbContext(DbContextOptions<OkulDbContext> options) : base(options) 
         { }
 
-        public DbSet<Ogrenci> Ogrenci { get; set; }
+        public DbSet<OgrenciCreateModel> Ogrenci { get; set; }
+        public DbSet<OgrenciReadModel> OgrenciRead { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Ogrenci>(entity =>
+            modelBuilder.Entity<OgrenciCreateModel>(entity =>
             {
                 entity.Property(o => o.ogrenciAdi)
                 .HasMaxLength(50)
